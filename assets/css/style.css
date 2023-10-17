@@ -1,0 +1,40 @@
+:root{
+    --main-color: #1a73f8;
+    --main-orange: orange;
+    --main-white: white;
+    --main-like-white: #efefef;
+    --main-like-gray: #ccc;
+}
+
+.container{
+    height: 100vh;
+}
+
+nav{
+    min-width: 620px;
+}
+
+nav h2{
+    margin-left: 10px;
+}
+
+nav .station-cover img{
+    height: 400px;
+}
+
+.about-station{
+    padding: 10px;
+}
+
+.about-station strong{
+    color: var(--main-color);
+}
+
+.about-station p{
+    border-bottom: 0.1px solid var(--main-like-gray);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-style: italic;
+    line-height: 1.9;
+}
+
