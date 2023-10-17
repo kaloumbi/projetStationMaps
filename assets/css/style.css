@@ -6,9 +6,12 @@
     --main-like-gray: #ccc;
 }
 
+/********* CONTAINER *********** */
 .container{
     height: 100vh;
 }
+
+/********* NAV *********** */
 
 nav{
     min-width: 620px;
@@ -30,6 +33,8 @@ nav .station-cover img{
     color: var(--main-color);
 }
 
+/********* SEARCH *********** */
+
 .about-station p{
     border-bottom: 0.1px solid var(--main-like-gray);
     font-size: 1.4rem;
@@ -37,4 +42,37 @@ nav .station-cover img{
     font-style: italic;
     line-height: 1.9;
 }
+
+
+/********* SEARCH BAR *********** */
+.search-bar{
+    left: 55px;
+    top: 10px;
+    background-color: var(--main-white);
+    padding: 15px 30px;
+    width: 450px;
+    height: 35px;
+    border-radius: 10px;
+    box-shadow: 2px 8px 12px rgb(0 0 0/20%);
+}
+
+
+.search-bar input{
+    height: 35px;
+    font-size: 1.8rem;
+    border: none;
+    outline: none;
+}
+
+.search-bar i{
+    color: var(--main-like-gray);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+/********* CONTAINER *********** */
+/********* CONTAINER *********** */
+/********* CONTAINER *********** */
+/********* CONTAINER *********** */
 

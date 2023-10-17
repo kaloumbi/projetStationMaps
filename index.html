@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Station Maps</title>
 </head>
 <body>
     <div id="app">
         <div class="container flex">
-            <nav id="menu" class="flex-1">
+            <div class="search-bar absolute flex aic gap-5">
+                <i class="fas fa-bars" id="bars"></i>
+                <input type="search" class="flex-1" name="" id="" placeholder="Rechercher sur station Maps">
+                <i class="fas fa-search"></i>
+            </div>
+            <nav id="menu" class="flex-1 none">
                 <div class="station-cover">
                     <img src="/assets/images/stations/stations-cover.png" alt="" width="100%">
                 </div>
@@ -38,5 +44,9 @@
             <div class="map carte b flex-3" id="map">Map</div>
         </div>
     </div>
+
+    
+    <script src="/assets/js/functions/listeners.js"></script>
+    <script src="/assets/js/functions/main.js"></script>
 </body>
 </html>
