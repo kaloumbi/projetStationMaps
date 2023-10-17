@@ -54,6 +54,7 @@ nav .station-cover img{
     height: 35px;
     border-radius: 10px;
     box-shadow: 2px 8px 12px rgb(0 0 0/20%);
+    z-index: 99999;
 }
 
 
