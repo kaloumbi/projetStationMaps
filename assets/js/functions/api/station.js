@@ -11,5 +11,54 @@ var getStations = async ()=>{
    }
    //on extrait les stations
    var stations = await response.json() //format de données
-   return stations
+   return stations.slice(0, 1000) // bosser sur un nombre limité de données pour éviter le plantage de la machine
+}
+
+//fonction pour initialiser les markers
+var initMarker = async ()=>{
+    var stations = await getStations()
+
+    //filtrer les données ayant des coordonnées gps(fields->latlng)
+    stations = stations.filter((station)=>{
+        if (station.fields) {
+            if (station.fields.latlng) {
+                return true
+            }
+        }
+        return false
+    })
+
+    //var marker = L.marker([51.5, -0.09]).addTo(map);
+    stations.forEach(({fields}) => {
+        L.marker(fields.latlng).addTo(APP.MYMAP);
+    });
+    console.log(stations[15].fields.latlng);
+    APP.MYMAP.setView(stations[15].fields.latlng, 9) //centrer: ZOOM = 9
+    //afficher les stations déjà filtrées
+    //return stations
+
+}
+
+
+//fonction d'initialisation de la carte
+var initMaps = () => {
+
+    //affichage des crédits de la carte
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(APP.MYMAP);
+
+    //execution de la fonction initMaker
+    initMarker()
+    .then(
+        ()=>{
+            console.log("Initialisation des markers");
+        }
+    )
+    .catch(
+        ()=>{
+            console.log("Probleme d'initialisation des marqueurs");
+        }
+    )
 }

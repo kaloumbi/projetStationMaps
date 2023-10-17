@@ -2,6 +2,8 @@
 var APP = {
     //url api
     API_STATION: "/api/stations.json",
+    MYMAP: L.map('map').setView([47.49163, 4.33834], 13), //Utiliser MYMAP partout dans mon application
+
     //afficher et masquer un element
     toggleNav: (ev) => {
         document.querySelector('nav').classList.toggle('none') //ce toggle permet d'ajoute une classe au si elle n'existe pas sinon il ne fait rien
@@ -9,16 +11,7 @@ var APP = {
 
 }
 
-//fonction d'initialisation de la carte
-var initMaps = () => {
-    var map = L.map('map').setView([51.505, -0.09], 13);
 
-    //affichage des crédits de la carte
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-}
 
 //la fonction qui va créer nos évènements
 var setupListeners = () => {
