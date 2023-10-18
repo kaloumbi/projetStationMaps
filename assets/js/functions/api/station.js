@@ -32,22 +32,13 @@ var initMarker = async ()=>{
     stations.forEach(({fields}) => {
         //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
-        var div = document.createElement('div')
-        var button = document.createElement('button')
-        
-        div.className = "station-popup"
-        div.innerHTML = `
-            <strong> Nom </strong>: ${fields.name} <br>
-            <strong> Adresse </strong>:${fields.adresse} <br>
-            <strong> Code Postal </strong>: ${fields.codepostal} ${fields.commune} <br>
-        `
-        button.innerHTML = "En savoir plus"
-        button.className = "bt-about-station"
-        div.appendChild(button)
+        let popupMessage =  APP.messagePopup(fields)
 
-        L.marker(fields.latlng).addTo(APP.MYMAP).bindPopup(div);
+        L.marker(fields.latlng).addTo(APP.MYMAP).bindPopup(popupMessage);
     });
-    console.log(stations[15].fields.latlng);
+    //console.log(stations[15].fields.latlng);
+
+    //centrer suivant les coordonnées en premier parametre
     APP.MYMAP.setView(stations[15].fields.latlng, 9) //centrer: ZOOM = 9
     //afficher les stations déjà filtrées
     //return stations
