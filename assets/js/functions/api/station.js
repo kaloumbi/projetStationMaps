@@ -30,7 +30,22 @@ var initMarker = async ()=>{
 
     //var marker = L.marker([51.5, -0.09]).addTo(map);
     stations.forEach(({fields}) => {
-        L.marker(fields.latlng).addTo(APP.MYMAP);
+        //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+
+        var div = document.createElement('div')
+        var button = document.createElement('button')
+        
+        div.className = "station-popup"
+        div.innerHTML = `
+            <strong> Nom </strong>: ${fields.name} <br>
+            <strong> Adresse </strong>:${fields.adresse} <br>
+            <strong> Code Postal </strong>: ${fields.codepostal} ${fields.commune} <br>
+        `
+        button.innerHTML = "En savoir plus"
+        button.className = "bt-about-station"
+        div.appendChild(button)
+
+        L.marker(fields.latlng).addTo(APP.MYMAP).bindPopup(div);
     });
     console.log(stations[15].fields.latlng);
     APP.MYMAP.setView(stations[15].fields.latlng, 9) //centrer: ZOOM = 9
