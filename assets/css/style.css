@@ -158,6 +158,28 @@ i.fa-star{
     font-size: 1.2rem;
 }
 
-/********* CONTAINER *********** */
+/********* SEARCH BAR SUGGESTION *********** */
+.search-bar-suggestion{
+    background-color: var(--main-white);
+    top: 67px;
+    left: 0;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 2px 8px 12px rgb(0 0 0/20%);
+}
+
+.search-bar-suggestion .suggestion-item{
+    padding: 5px 15px;
+    line-height: 1.9;
+    border-bottom: 0.1px solid var(--main-like-gray);
+    cursor: pointer;
+}
+
+.search-bar-suggestion .suggestion-item:hover{
+    background-color: var(--main-like-white);
+}
+
+
+
 /********* CONTAINER *********** */
 
