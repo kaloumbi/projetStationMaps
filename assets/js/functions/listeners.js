@@ -150,7 +150,28 @@ var APP = {
             return false
         })
 
-        console.log(stations);
+        APP.displayAucomplete(stations)
+        //console.log(stations);
+    },
+
+    displayAucomplete: (stations)=>{
+        //console.log(stations);
+        let container = document.querySelector('.search-bar-suggestion')
+        container.innerHTML = ""
+        //Affichage de la boite d'autocompletion
+        container.classList.contains('none') ? container.classList.toggle('none'): null
+        if (!stations.length) {
+            container.innerHTML = `<div class="suggestion-item">Sugestion 1</div> Aucun resultat ne correspond à votre recherche !`
+            return; //pour eviter le else
+        }
+
+        stations = stations.slice(0, 15)
+        stations.forEach(({fields}) =>{
+            container.innerHTML += `<div class="suggestion-item">
+                ${fields.adresse} <strong> ${fields.codepostal} </strong>
+                <strong> ${fields.commune} </strong>
+            </div>`
+        })
     }
 
 
