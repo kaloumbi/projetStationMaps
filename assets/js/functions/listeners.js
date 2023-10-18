@@ -9,12 +9,113 @@ var APP = {
         document.querySelector('nav').classList.toggle('none') //ce toggle permet d'ajoute une classe au si elle n'existe pas sinon il ne fait rien
     },
 
-    messagePopup : (fields) =>{
+    setDatails: (fields) => {
+        console.log(fields);
+        const { hdebut, hfin } = fields
+        let { carburants, services } = fields
+        var horaire;
+        hdebut === hfin ? horaire = "24h/24" : horaire = hdebut + " à " + hfin
+        carburants = carburants ? "<li>" + carburants.split('|').join('</li><li>') + "</li>" : ""
+
+        services = services ? "<li>" + services.split('|').join('</li><li>') + "</li>" : ""
+
+        var template = `
+                    <div class="station-cover">
+                    <img src="${fields.imageURL} " alt="" width="100%">
+                </div>
+                <div class="station-title">
+                    <h2>${fields.name}</h2>
+                </div>
+                <div class="station-reviews flex gap-10 p-10">
+                    <div class="reviews-note">4.3</div>
+                    <div class="reviews-start">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="reviews-resume">
+                    ${fields.countNotes} avis
+                    </div>
+                </div>
+                <div class="station-actions flex p-10">
+                    <div class="station-action-item flex column flex-1 aic">
+                        <i class="fas fa-road"></i>
+                        <span>Itinéraires</span>
+                    </div>
+                    <div class="station-action-item flex column flex-1 aic">
+                        <i class="fas fa-road"></i>
+                        <span>Enregistrer</span>
+                    </div>
+                    <div class="station-action-item flex column flex-1 aic">
+                        <i class="fas fa-road"></i>
+                        <span>Proximité</span>
+                    </div>
+                    <div class="station-action-item flex column flex-1 aic">
+                        <i class="fas fa-road"></i>
+                        <span>Phone</span>
+                    </div>
+                    <div class="station-action-item flex column flex-1 aic">
+                        <i class="fas fa-road"></i>
+                        <span>Partager</span>
+                    </div>
+                </div>
+                <div class="station-description">
+                ${fields.description}
+                </div>
+                <div class="station-services p-10">
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/adresse.svg" alt="" >
+                        <strong>Adresse: </strong>
+                        <span class="flex-1">${fields.adresse} <strong> ${fields.codepostal} </strong> ${fields.commune}</span>
+                    </div>
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/phone.svg" alt="" >
+                        <strong>Téléphone : </strong>
+                        <span class="flex-1">+221 771009 55</span>
+                    </div>
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/horaire.svg" alt="" >
+                        <strong>Horaire: </strong>
+                        <span class="flex-1">${horaire}</span>
+                    </div>
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/carburant.svg" alt="" >
+                        <strong>Carburant : </strong>
+                        <ul class="flex-1">
+                            ${fields.carburants}
+                        </ul>
+                    </div>
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/route.svg" alt="" >
+                        <strong>Route : </strong>
+                        <span class="flex-1">A proximité d'autoroute</span>
+                    </div>
+                    <div class="station-service flex aic gap-10">
+                        <img src="/assets/icons/service.svg" alt="" >
+                        <strong>Services : </strong>
+                        <ul class="flex-1">
+                            ${fields.carburants}
+                        </ul>
+                    </div>
+                    
+                </div>
+        `
+        let nav = document.querySelector('nav')
+        nav.classList.contains('none') ? nav.classList.toggle('none') : ""
+        nav.innerHTML = template
+        nav.scrollTop = 0
+        console.log(template);
+    }
+    ,
+
+    messagePopup: (fields) => {
         //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
         var div = document.createElement('div')
         var button = document.createElement('button')
-        
+
         div.className = "station-popup"
         div.innerHTML = `
             <strong> Nom </strong>: ${fields.name} <br>
@@ -23,9 +124,33 @@ var APP = {
         `
         button.innerHTML = "En savoir plus"
         button.className = "bt-about-station"
+
+        button.onclick = () => {
+            //
+            APP.setDatails(fields)
+        }
+
         div.appendChild(button)
 
         return div
+    },
+
+    filterStations: (ev) =>{
+        let tag = ev.target.value.trim()
+        let stations = JSON.parse(localStorage.getItem("stations")) //Recuperer les données en format Java Script
+
+        stations = stations.filter(({fields})=>{
+            tag = tag.toLowerCase()
+            key_one = fields.name.toLowerCase()
+            key_two = fields.adresse.toLowerCase()
+
+            if (key_one.search(tag) >0 || key_two.search(tag) > 0) { //on a trouvé le mot clé à l'interieur
+                return true
+            }
+            return false
+        })
+
+        console.log(stations);
     }
 
 
@@ -36,6 +161,7 @@ var APP = {
 //la fonction qui va créer nos évènements
 var setupListeners = () => {
     document.getElementById('bars').onclick = APP.toggleNav
+    document.querySelector('input').oninput = APP.filterStations
 }
 
 

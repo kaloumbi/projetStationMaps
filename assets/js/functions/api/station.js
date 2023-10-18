@@ -28,6 +28,9 @@ var initMarker = async ()=>{
         return false
     })
 
+    //stocker les données en local après recuperation pour les filtres
+    localStorage.setItem('stations', JSON.stringify(stations)) //recuperation des données en format textuel
+
     //var marker = L.marker([51.5, -0.09]).addTo(map);
     stations.forEach(({fields}) => {
         //marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
