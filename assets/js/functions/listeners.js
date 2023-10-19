@@ -4,6 +4,7 @@ var APP = {
     API_STATION: "/api/stations.json",
     MYMAP: L.map('map').setView([47.49163, 4.33834], 13), //Utiliser MYMAP partout dans mon application
 
+    MARKER: [],
     //afficher et masquer un element
     toggleNav: (ev) => {
         document.querySelector('nav').classList.toggle('none') //ce toggle permet d'ajoute une classe au si elle n'existe pas sinon il ne fait rien
@@ -139,6 +140,9 @@ var APP = {
         let tag = ev.target.value.trim()
         let stations = JSON.parse(localStorage.getItem("stations")) //Recuperer les données en format Java Script
 
+        //pour cacher l'élément d'autocompletion
+        APP.hideSuggestion()
+
         stations = stations.filter(({fields})=>{
             tag = tag.toLowerCase()
             key_one = fields.name.toLowerCase()
@@ -167,11 +171,33 @@ var APP = {
 
         stations = stations.slice(0, 15)
         stations.forEach(({fields}) =>{
-            container.innerHTML += `<div class="suggestion-item">
+            let div = document.createElement('div')
+            div.className = 'suggestion-item'
+            div.innerHTML = `
                 ${fields.adresse} <strong> ${fields.codepostal} </strong>
                 <strong> ${fields.commune} </strong>
-            </div>`
+            `
+
+            //lorsqu'on clique qu'il nous affiche les détails
+            div.onclick = ()=>{
+                APP.setDatails(fields)
+                APP.hideSuggestion()
+                let marker = APP.MARKER.filter(e => e._id === fields._id)[0].marker
+                marker.openPopup()
+                //console.log(marker);
+            }
+            container.appendChild(div)
         })
+    },
+
+    hideSuggestion: ()=>{
+        //pour cacher l'élément d'autocompletion
+        let container = document.querySelector('.search-bar-suggestion')
+        if (!container.classList.contains('none')) {
+            container.classList.add('none')
+        }else{
+
+        }
     }
 
 
@@ -183,6 +209,8 @@ var APP = {
 var setupListeners = () => {
     document.getElementById('bars').onclick = APP.toggleNav
     document.querySelector('input').oninput = APP.filterStations
+    document.querySelector('input').onmouseover = APP.filterStations
+    document.querySelector('.search-bar-suggestion').onmouseleave = APP.hideSuggestion
 }
 
 

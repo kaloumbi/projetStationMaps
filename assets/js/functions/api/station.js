@@ -37,7 +37,12 @@ var initMarker = async ()=>{
 
         let popupMessage =  APP.messagePopup(fields)
 
-        L.marker(fields.latlng).addTo(APP.MYMAP).bindPopup(popupMessage);
+        var marker = L.marker(fields.latlng).addTo(APP.MYMAP).bindPopup(popupMessage);
+        APP.MARKER.push({
+            _id: fields._id,
+            marker: marker
+        })
+        
     });
     //console.log(stations[15].fields.latlng);
 
