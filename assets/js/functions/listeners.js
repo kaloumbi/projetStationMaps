@@ -2,6 +2,7 @@
 var APP = {
     //url api
     API_STATION: "/api/stations.json",
+    API_STATION_FIREBASE: 'https://stations-206ae-default-rtdb.firebaseio.com/stations.json',
     MYMAP: L.map('map').setView([47.49163, 4.33834], 13), //Utiliser MYMAP partout dans mon application
 
     MARKER: [],

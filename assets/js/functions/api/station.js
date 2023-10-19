@@ -5,12 +5,14 @@
  * @returns stations
  */
 var getStations = async ()=>{
-   var response = await fetch(APP.API_STATION)
+   var response = await fetch(APP.API_STATION_FIREBASE)
    if (!response.ok) {
       throw new Error("Erreur de recuperation des données!")
    }
    //on extrait les stations
    var stations = await response.json() //format de données
+
+   //saveData(stations)
    return stations.slice(0, 1000) // bosser sur un nombre limité de données pour éviter le plantage de la machine
 }
 
@@ -75,4 +77,20 @@ var initMaps = () => {
             console.log("Probleme d'initialisation des marqueurs");
         }
     )
+}
+
+
+var saveData = async (data)=>{
+    var response = await fetch(APP.API_STATION_FIREBASE, {
+        method: 'PUT',
+        body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+        throw new Error('Erreur de sauvegarde des données!')
+    }
+
+    //attendre à ce que la promesse soit tenue
+    var result = await response.json()
+    return result
 }
